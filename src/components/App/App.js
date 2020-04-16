@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 
 
 class App extends Component {
@@ -7,10 +8,15 @@ class App extends Component {
     return (
       <div>
         <h1>Giphy Search!</h1>
+        {JSON.stringify(this.props.reduxStore)}
       </div>
     );
   }
   
 }
 
-export default App;
+const mapStateToProps = (reduxStore) => ({
+  reduxStore
+})
+
+export default connect(mapStateToProps)(App);
