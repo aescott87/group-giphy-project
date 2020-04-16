@@ -39,12 +39,13 @@ class App extends Component {
  
         <input placeholder="GIF search"onChange={this.handleChange}/>
         <button value={this.state.searchQuery} onClick={this.searchGifs}>search</button>
-        {JSON.stringify(this.props.reduxStore.gifListReducer)}
+        {JSON.stringify(this.props.reduxStore.gifListReducer.images)}
+        <img src={this.props.reduxStore.gifListReducer.url}/>
       </div>
       <div>
         <h1>Favorites</h1>
         <ul>
-          {this.props.favorite.map(item => (
+          {this.props.reduxStore.favoriteReducer.map(item => (
             <li key={item.id}><img src={item.path}/></li>
           ))}
         </ul>
@@ -58,7 +59,8 @@ class App extends Component {
 }
 
 const mapStateToProps = (reduxStore) => ({
-  favorite: reduxStore.favoriteReducer,
+  reduxStore
+  
 })
 
 export default connect(mapStateToProps)(App);
