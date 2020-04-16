@@ -12,6 +12,8 @@ import { takeEvery, put } from 'redux-saga/effects';
 function* rootSaga() {
     yield takeEvery('GET_GIF', getGifSaga);
     yield takeEvery('SEARCH_GIF', searchGifSaga);
+    yield takeEvery('FETCH_FAVORITE', getFavoriteSaga);
+
 }
 
       
@@ -44,6 +46,17 @@ function* getGifSaga( action ) {
     }
 }
 
+function* getFavoriteSaga( action ) {
+    console.log('in get gif saga');
+    try {
+        const response = yield axios.get('/api/favorite');
+        yield put({type: 'LIST_FAVORITE', payload: response.data})
+    }
+    catch (error) {
+        console.log('error in get gif saga');
+    }
+}
+
 
 
 const gifListReducer = (state = {}, action) => {
@@ -54,10 +67,19 @@ const gifListReducer = (state = {}, action) => {
     return state
 }
 
+const favoriteReducer = (state = [], action) => {
+    if (action.type === 'LIST_FAVORITE'){
+        console.log('in favorite reducer');
+        return action.payload
+    }
+    return state
+}
+
 
 const reduxStore = createStore(
     combineReducers({
         gifListReducer,
+        favoriteReducer,
     }),
     applyMiddleware(sagaMiddleware, logger)
 );
