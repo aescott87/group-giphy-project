@@ -49,7 +49,7 @@ function* getGifSaga( action ) {
 const gifListReducer = (state = {}, action) => {
     if (action.type === 'LIST_GIF'){
         console.log('in gif list reducer', action.payload);
-        return action.payload;
+        return action.payload[0];
     }
     return state
 }
