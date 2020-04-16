@@ -44,7 +44,7 @@ class App extends Component {
       <div>
         <h1>Favorites</h1>
         <ul>
-          {this.props.favorite.map(item => (
+          {this.props.reduxStore.favoriteReducer.map(item => (
             <li key={item.id}><img src={item.path}/></li>
           ))}
         </ul>
@@ -58,7 +58,8 @@ class App extends Component {
 }
 
 const mapStateToProps = (reduxStore) => ({
-  favorite: reduxStore.favoriteReducer,
+  reduxStore
+  
 })
 
 export default connect(mapStateToProps)(App);
