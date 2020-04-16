@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import axios from 'axios'
+// import axios from 'axios'
 
 
 class App extends Component {
 
   state = {
-    url_image: ''
+    url_image: '',
+    searchQuery: ''
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      searchQuery: event.target.value
+    });
+
   }
 
   componentDidMount() {
@@ -14,18 +22,9 @@ class App extends Component {
   }
 
   searchGifs = () => {
-    console.log('in searchGifs')
-    axios.get('/api/search')
-      .then((response) => {
-        console.log('response is', response.data)
-        this.setState({
-          url_image: response.data
-        })
-      })
-      .catch(error => {
-        alert('error on get', error);
-        console.log(error);
-      })
+    console.log('in searchGifs, searching for', this.state.searchQuery)
+    this.props.dispatch({type: 'SEARCH_GIF', payload: this.state.searchQuery})
+
   }
 
   getFavorites = () => {
@@ -37,8 +36,10 @@ class App extends Component {
       <>
       <div>
         <h1>Giphy Search!</h1>
-        {JSON.stringify(this.props.reduxStore)}
-        <button onClick={this.searchGifs}>search</button>
+ 
+        <input placeholder="GIF search"onChange={this.handleChange}/>
+        <button value={this.state.searchQuery} onClick={this.searchGifs}>search</button>
+        {JSON.stringify(this.props.reduxStore.gifListReducer)}
       </div>
       <div>
         <h1>Favorites</h1>
