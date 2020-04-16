@@ -9,6 +9,10 @@ class App extends Component {
     url_image: ''
   }
 
+  componentDidMount() {
+    this.getFavorites();
+  }
+
   searchGifs = () => {
     console.log('in searchGifs')
     axios.get('/api/search')
@@ -24,20 +28,36 @@ class App extends Component {
       })
   }
 
+  getFavorites = () => {
+    this.props.dispatch({type: 'FETCH_FAVORITE'})
+  }
+
   render() {
     return (
+      <>
       <div>
         <h1>Giphy Search!</h1>
         {JSON.stringify(this.props.reduxStore)}
         <button onClick={this.searchGifs}>search</button>
       </div>
+      <div>
+        <h1>Favorites</h1>
+        <ul>
+          {this.props.favorite.map(item => (
+            <li key={item.id}><img src={item.path}/></li>
+          ))}
+        </ul>
+
+      </div>
+      </>
     );
+    
   }
   
 }
 
 const mapStateToProps = (reduxStore) => ({
-  reduxStore
+  favorite: reduxStore.favoriteReducer,
 })
 
 export default connect(mapStateToProps)(App);
