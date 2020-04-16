@@ -39,7 +39,8 @@ class App extends Component {
  
         <input placeholder="GIF search"onChange={this.handleChange}/>
         <button value={this.state.searchQuery} onClick={this.searchGifs}>search</button>
-        {JSON.stringify(this.props.reduxStore.gifListReducer)}
+        {JSON.stringify(this.props.reduxStore.gifListReducer.images)}
+        <img src={this.props.reduxStore.gifListReducer.url}/>
       </div>
       <div>
         <h1>Favorites</h1>
