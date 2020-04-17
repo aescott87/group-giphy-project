@@ -31,6 +31,10 @@ class App extends Component {
     this.props.dispatch({type: 'FETCH_FAVORITE'})
   }
 
+  favoriteGif = () => {
+    console.log('click to favorite')
+  }
+
   render() {
     return (
       <>
@@ -39,8 +43,11 @@ class App extends Component {
  
         <input placeholder="GIF search"onChange={this.handleChange}/>
         <button value={this.state.searchQuery} onClick={this.searchGifs}>search</button>
-        {JSON.stringify(this.props.reduxStore.gifListReducer.images)}
-        <img src={this.props.reduxStore.gifListReducer.url}/>
+          {this.props.reduxStore.gifListReducer.images && 
+          <div>   
+            <img src={this.props.reduxStore.gifListReducer.images.original.url}/>
+            <button onClick={this.favoriteGif}>Click here to favorite this image</button>
+          </div>}
       </div>
       <div>
         <h1>Favorites</h1>
