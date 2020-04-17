@@ -32,7 +32,8 @@ class App extends Component {
   }
 
   favoriteGif = () => {
-    console.log('click to favorite')
+    console.log('click to favorite');
+    this.props.dispatch({type: 'ADD_FAVORITE', payload: this.props.reduxStore.gifListReducer.images.original.url})
   }
 
   render() {
