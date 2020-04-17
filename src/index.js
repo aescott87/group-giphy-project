@@ -13,12 +13,25 @@ function* rootSaga() {
     yield takeEvery('GET_GIF', getGifSaga);
     yield takeEvery('SEARCH_GIF', searchGifSaga);
     yield takeEvery('FETCH_FAVORITE', getFavoriteSaga);
+    yield takeEvery('ADD_FAVORITE', addFavoriteSaga);
 
 }
 
       
 
 const sagaMiddleware = createSagaMiddleware();
+
+function* addFavoriteSaga( action ) {
+    console.log('in add favorite saga', action.payload);
+    try {
+        yield axios.post('/api/favorite', {
+            data: action.payload
+        });
+    }
+    catch(error) {
+        console.log('error in add favorite saga', error);
+    }
+}
 
 function* searchGifSaga( action ) {
     console.log('in search giphy saga', action.payload);
